@@ -28,7 +28,7 @@ const estados = {
       { texto: "Seguir a margem", proximo: "ponte", probabilidade: 0.7 }
     ]
   },
-  // 4° estado (fase) -> pode ser ativado pelo 3° e 10° décimo estado dependo da escolha do neurônio
+  // 4° estado (fase) -> pode ser ativado pelo 3° e 10° estado dependo da escolha do neurônio
   cachoeira: {
     descricao: "Você é arrastado pela correnteza e cai de uma cachoeira!",
     imagem: "/images/cachoeira.jpg",
