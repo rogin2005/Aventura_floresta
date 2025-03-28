@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const estados = {
+  // 1° estado (fase) -> onde tudo inicia
   inicio: {
     descricao: "Você está em uma floresta densa. Há uma trilha ao norte e um caminho ao sul.",
     imagem: "/images/floresta_inicio.jpg",
@@ -9,6 +10,7 @@ const estados = {
       { texto: "Seguir ao sul", proximo: "rio", probabilidade: 0.4 }
     ]
   },
+  // 2° estado (fase) -> pode ser ativado pelo 1° estado
   caverna: {
     descricao: "Você encontra uma caverna escura. Algo se move lá dentro.",
     imagem: "/images/caverna.jpg",
@@ -17,6 +19,7 @@ const estados = {
       { texto: "Contornar a caverna", proximo: "vilarejo", probabilidade: 0.5 }
     ]
   },
+  // 3° estado (fase) -> pode ser ativado pelo 1° estado
   rio: {
     descricao: "Você chegou a um rio com correnteza forte.",
     imagem: "/images/rio.jpg",
@@ -25,6 +28,7 @@ const estados = {
       { texto: "Seguir a margem", proximo: "ponte", probabilidade: 0.7 }
     ]
   },
+  // 4° estado (fase) -> pode ser ativado pelo 3° e 10° décimo estado dependo da escolha do neurônio
   cachoeira: {
     descricao: "Você é arrastado pela correnteza e cai de uma cachoeira!",
     imagem: "/images/cachoeira.jpg",
@@ -33,6 +37,7 @@ const estados = {
       { texto: "Deixar a correnteza te levar", proximo: "vilarejo", probabilidade: 0.3 }
     ]
   },
+  // 5° estado (fase) -> pode ser ativado pelo 2° estado
   monstro: {
     descricao: "Um monstro aparece! Você tenta fugir.",
     imagem: "/images/monstro.png",
@@ -41,6 +46,7 @@ const estados = {
       { texto: "Correr", proximo: "inicio", probabilidade: 0.3 }
     ]
   },
+  // 6° estado (fase) -> pode ser ativado pelo 2° e 4° estado
   vilarejo: {
     descricao: "Você encontrou um pequeno vilarejo com pessoas amigáveis.",
     imagem: "/images/vilarejo.png",
@@ -49,6 +55,7 @@ const estados = {
       { texto: "Descansar na pousada", proximo: "descanso", probabilidade: 0.4 }
     ]
   },
+  // 7° estado (fase) -> pode ser ativado pelo 6° estado
   mercado: {
     descricao: "O mercado do vilarejo tem vários itens úteis para sua jornada.",
     imagem: "/images/mercado.jpg",
@@ -57,6 +64,7 @@ const estados = {
       { texto: "Desafio misterioso", proximo: "criatura", probabilidade: 0.4 }
     ]
   },
+  // 8° estado (fase) -> pode ser ativado pelo 7° e 13° estado
   suprimentos: {
     descricao: "Você conseguiu suprimentos essenciais para continuar sua aventura!",
     imagem: "/images/suprimentos.jpg",
@@ -65,7 +73,7 @@ const estados = {
       { texto: "Explorar o vilarejo", proximo: "criatura", probabilidade: 0.4 }
     ]
   },
-  // Adicionando mais estados...
+  // 9° estado (fase) -> pode ser ativado pelo 3° estado
   ponte: {
     descricao: "Uma velha ponte de madeira cruza o rio. Parece frágil...",
     imagem: "/images/ponte.png",
@@ -74,6 +82,7 @@ const estados = {
       { texto: "Correr pela ponte", proximo: "ponte_quebra", probabilidade: 0.3 }
     ]
   },
+  // 10° estado (fase) -> pode ser ativado pelo 9° estado
   ponte_quebra: {
     descricao: "A ponte não aguenta o peso e quebra! Você cai na água gelada.",
     imagem: "/images/queda.png",
@@ -82,6 +91,7 @@ const estados = {
       { texto: "Deixar a correnteza te levar", proximo: "cachoeira", probabilidade: 0.4 }
     ]
   },
+  // 11° estado (fase) -> pode ser ativado pelo 4°, 9° e 10° estado
   floresta_densa: {
     descricao: "A floresta fica cada vez mais fechada. Sons estranhos ecoam...",
     imagem: "/images/floresta_densa.jpg",
@@ -90,6 +100,7 @@ const estados = {
       { texto: "Procurar um abrigo", proximo: "cabana", probabilidade: 0.5 }
     ]
   },
+  // 12° estado (fase) -> pode ser ativado pelo 11°, 14°, 8° e 7° estado
   criatura: {
     descricao: "Uma criatura sombria surge das sombras! Você congela de medo.",
     imagem: "/images/criatura.png",
@@ -98,6 +109,7 @@ const estados = {
       { texto: "Enfrentar a criatura", proximo: "derrota", probabilidade: 0.4 }
     ]
   },
+  // 13° estado (fase) -> pode ser ativado pelo 11° estado
   cabana: {
     descricao: "Você encontra uma cabana abandonada. Parece segura por enquanto...",
     imagem: "/images/cabana.jpg",
@@ -107,6 +119,8 @@ const estados = {
     ]
   },
   // Estados finais
+
+  // Estado de derrota -> aqui é o fim da linha e você perde...
   derrota: {
     descricao: "Infelizmente sua jornada termina aqui...",
     imagem: "/images/gameover.png",
@@ -114,6 +128,7 @@ const estados = {
       { texto: "Reiniciar", proximo: "inicio", probabilidade: 1.0 }
     ]
   },
+  // 14° estado (fase) -> pode ser ativado pelo 6° estado
   descanso: {
     descricao: "Você descansou e recuperou energia para continuar sua jornada.",
     imagem: "/images/descanso.png",
@@ -122,6 +137,7 @@ const estados = {
       { texto: "Dormir mais um pouco", proximo: "criatura", probabilidade: 0.4 }
     ]
   },
+  // Estado de vitória -> aqui é o fim da linha mas você ganha...
   clareira: {
     descricao: "Você finalmente sai da floresta e encontra uma bela clareira! Parabéns!",
     imagem: "/images/vitoria.png",
